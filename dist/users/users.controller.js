@@ -33,6 +33,7 @@ const get_user_dto_1 = require("./dtos/get-user.dto");
 const get_user_by_id_service_1 = require("./services/get-user-by-id.service");
 const delete_user_by_email_service_1 = require("./services/delete-user-by-email.service");
 const unlock_level_service_1 = require("./services/unlock-level.service");
+const login_dto_1 = require("./dtos/login.dto");
 let UsersController = class UsersController {
     constructor(createUserService, getUserByEmailService, getAllUsersService, updateUserByEmailService, getUserByIdService, deleteUserByEmailService, unlockLevelService) {
         this.createUserService = createUserService;
@@ -47,6 +48,13 @@ let UsersController = class UsersController {
     create(createUserDto) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.createUserService.create(createUserDto);
+        });
+    }
+    // En el controlador del login
+    login(loginDto) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const isValidUser = yield this.createUserService.validateUserPassword(loginDto.email, loginDto.password);
+            return { success: isValidUser }; // En lugar de devolver solo el booleano, devolvemos un objeto con la propiedad 'success'
         });
     }
     //Endpoint to get all users
@@ -80,6 +88,7 @@ let UsersController = class UsersController {
             return { message: 'User deleted successfully' };
         });
     }
+    //Endpoint to unlock a level for a user
     unlockLevel(email, level) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.unlockLevelService.unlockLevel(email, level);
@@ -94,6 +103,13 @@ __decorate([
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)('login'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [login_dto_1.LoginDto]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "login", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),

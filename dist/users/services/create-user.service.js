@@ -41,7 +41,7 @@ let CreateUserService = class CreateUserService {
             return yield this.userRepository.create(Object.assign(Object.assign({}, createUserDto), { password: hashedPassword }));
         });
     }
-    // Método para comparar la contraseña durante el inicio de sesión
+    // Método para comparar la contraseña
     validateUserPassword(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.userRepository.findByEmail(email);

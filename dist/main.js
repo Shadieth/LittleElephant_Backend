@@ -20,6 +20,12 @@ function bootstrap() {
         const port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
         // Conectar a la base de datos
         yield database_module_1.DatabaseModule.connect();
+        // Habilitar CORS
+        app.enableCors({
+            origin: '*', // Permite cualquier origen (lo ideal sería especificar solo los orígenes necesarios)
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
+            allowedHeaders: 'Content-Type, Accept', // Cabeceras permitidas
+        });
         // Habilitar las validaciones globalmente
         app.useGlobalPipes(new common_1.ValidationPipe({
             whitelist: true, // Elimina propiedades no definidas en el DTO

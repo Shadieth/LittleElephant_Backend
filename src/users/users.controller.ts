@@ -10,6 +10,7 @@ import { GetUserByIdDto, GetUserByEmailDto } from './dtos/get-user.dto';
 import { GetUserByIdService } from './services/get-user-by-id.service';
 import { DeleteUserByEmailService } from './services/delete-user-by-email.service';
 import { UnlockLevelService } from './services/unlock-level.service';
+import { LoginDto } from './dtos/login.dto';
 
 @Controller('users')
 export class UsersController {
@@ -27,6 +28,17 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     return this.createUserService.create(createUserDto);
+  }
+
+  // En el controlador del login
+  @Post('login')
+  async login(@Body() loginDto: LoginDto): Promise<{ success: boolean }> {
+    const isValidUser = await this.createUserService.validateUserPassword(
+      loginDto.email,
+      loginDto.password
+    );
+    
+    return { success: isValidUser }; // En lugar de devolver solo el booleano, devolvemos un objeto con la propiedad 'success'
   }
 
   //Endpoint to get all users
@@ -60,6 +72,7 @@ export class UsersController {
      return { message: 'User deleted successfully' };
    }
 
+   //Endpoint to unlock a level for a user
    @Post(':email/unlock-level')
   async unlockLevel(@Param('email') email: string, @Body('level') level: number) {
     return this.unlockLevelService.unlockLevel(email, level);

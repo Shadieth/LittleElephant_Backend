@@ -10,6 +10,13 @@ async function bootstrap() {
   // Conectar a la base de datos
   await DatabaseModule.connect();
 
+  // Habilitar CORS
+  app.enableCors({
+    origin: '*', // Permite cualquier origen (lo ideal sería especificar solo los orígenes necesarios)
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
+    allowedHeaders: 'Content-Type, Accept', // Cabeceras permitidas
+  });
+
   // Habilitar las validaciones globalmente
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true, // Elimina propiedades no definidas en el DTO
