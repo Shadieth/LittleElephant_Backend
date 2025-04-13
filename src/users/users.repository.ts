@@ -47,4 +47,11 @@ export class UserRepository {
       { new: true } // Retorna el usuario actualizado
     ).exec();
   }
+
+  async deleteEcosystem(email: string, ecosystemId: string): Promise<void> {
+    await this.userModel.updateOne(
+      { email },
+      { $pull: { ecosystems: { _id: ecosystemId } } }
+    ).exec();
+  }
 }

@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DatabaseModule } from './config/database.module';
 import { ValidationPipe } from '@nestjs/common';
+import * as express from 'express';
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,20 +14,24 @@ async function bootstrap() {
 
   // Habilitar CORS
   app.enableCors({
-    origin: '*', // Permite cualquier origen (lo ideal sería especificar solo los orígenes necesarios)
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
-    allowedHeaders: 'Content-Type, Accept', // Cabeceras permitidas
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Accept',
   });
 
-  // Habilitar las validaciones globalmente
+  // Habilitar validaciones globales
   app.useGlobalPipes(new ValidationPipe({
-    whitelist: true, // Elimina propiedades no definidas en el DTO
-    forbidNonWhitelisted: true, // Lanza error si se encuentran propiedades no válidas
-    transform: true, // Transforma los datos entrantes en el tipo correcto
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transform: true,
   }));
+
+  // Servir carpeta pública de imágenes
+  app.use('/images', express.static(join(__dirname, '..', 'public/images')));
 
   await app.listen(port, '0.0.0.0');
   console.log(`Servidor corriendo en http://localhost:${port}`);
 }
 
 bootstrap();
+

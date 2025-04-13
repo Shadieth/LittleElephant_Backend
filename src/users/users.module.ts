@@ -10,6 +10,8 @@ import { UpdateUserByEmailService } from './services/update-user-by-email.servic
 import { GetUserByIdService } from './services/get-user-by-id.service';
 import { DeleteUserByEmailService } from './services/delete-user-by-email.service';
 import { UnlockLevelService } from './services/unlock-level.service';
+import { ValidatePasswordService } from './services/validate-password.service';
+import { DeleteEcosystemService } from './services/delete-ecosystem.service';
 
 @Module({
   imports: [
@@ -22,9 +24,11 @@ import { UnlockLevelService } from './services/unlock-level.service';
     GetAllUsersService,
     GetUserByIdService,
     UpdateUserByEmailService,
+    DeleteEcosystemService,
     UserRepository,
     DeleteUserByEmailService,
     UnlockLevelService,
+    ValidatePasswordService,
   ],
 })
 export class UsersModule {}

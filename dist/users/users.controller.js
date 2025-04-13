@@ -34,8 +34,10 @@ const get_user_by_id_service_1 = require("./services/get-user-by-id.service");
 const delete_user_by_email_service_1 = require("./services/delete-user-by-email.service");
 const unlock_level_service_1 = require("./services/unlock-level.service");
 const login_dto_1 = require("./dtos/login.dto");
+const validate_password_service_1 = require("./services/validate-password.service");
+const delete_ecosystem_service_1 = require("./services/delete-ecosystem.service");
 let UsersController = class UsersController {
-    constructor(createUserService, getUserByEmailService, getAllUsersService, updateUserByEmailService, getUserByIdService, deleteUserByEmailService, unlockLevelService) {
+    constructor(createUserService, getUserByEmailService, getAllUsersService, updateUserByEmailService, getUserByIdService, deleteUserByEmailService, unlockLevelService, validatePasswordService, deleteEcosystemService) {
         this.createUserService = createUserService;
         this.getUserByEmailService = getUserByEmailService;
         this.getAllUsersService = getAllUsersService;
@@ -43,6 +45,8 @@ let UsersController = class UsersController {
         this.getUserByIdService = getUserByIdService;
         this.deleteUserByEmailService = deleteUserByEmailService;
         this.unlockLevelService = unlockLevelService;
+        this.validatePasswordService = validatePasswordService;
+        this.deleteEcosystemService = deleteEcosystemService;
     }
     //Endpoint to create a new user
     create(createUserDto) {
@@ -53,7 +57,7 @@ let UsersController = class UsersController {
     // En el controlador del login
     login(loginDto) {
         return __awaiter(this, void 0, void 0, function* () {
-            const isValidUser = yield this.createUserService.validateUserPassword(loginDto.email, loginDto.password);
+            const isValidUser = yield this.validatePasswordService.validateUserPassword(loginDto.email, loginDto.password);
             return { success: isValidUser }; // En lugar de devolver solo el booleano, devolvemos un objeto con la propiedad 'success'
         });
     }
@@ -92,6 +96,12 @@ let UsersController = class UsersController {
     unlockLevel(email, level) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.unlockLevelService.unlockLevel(email, level);
+        });
+    }
+    deleteEcosystem(email, ecosystemId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.deleteEcosystemService.deleteEcosystem(email, ecosystemId);
+            return { message: 'Ecosistema eliminado exitosamente' };
         });
     }
 };
@@ -153,6 +163,14 @@ __decorate([
     __metadata("design:paramtypes", [String, Number]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "unlockLevel", null);
+__decorate([
+    (0, common_1.Delete)(':email/ecosystems/:ecosystemId'),
+    __param(0, (0, common_1.Param)('email')),
+    __param(1, (0, common_1.Param)('ecosystemId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "deleteEcosystem", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [create_user_service_1.CreateUserService,
@@ -161,5 +179,7 @@ exports.UsersController = UsersController = __decorate([
         update_user_by_email_service_1.UpdateUserByEmailService,
         get_user_by_id_service_1.GetUserByIdService,
         delete_user_by_email_service_1.DeleteUserByEmailService,
-        unlock_level_service_1.UnlockLevelService])
+        unlock_level_service_1.UnlockLevelService,
+        validate_password_service_1.ValidatePasswordService,
+        delete_ecosystem_service_1.DeleteEcosystemService])
 ], UsersController);

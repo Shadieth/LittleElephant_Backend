@@ -41,18 +41,6 @@ let CreateUserService = class CreateUserService {
             return yield this.userRepository.create(Object.assign(Object.assign({}, createUserDto), { password: hashedPassword }));
         });
     }
-    // Método para comparar la contraseña
-    validateUserPassword(email, password) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userRepository.findByEmail(email);
-            if (!user) {
-                return false;
-            }
-            // Comparar la contraseña introducida con la cifrada en la base de datos
-            const isMatch = yield bcrypt_1.default.compare(password, user.password);
-            return isMatch;
-        });
-    }
 };
 exports.CreateUserService = CreateUserService;
 exports.CreateUserService = CreateUserService = __decorate([

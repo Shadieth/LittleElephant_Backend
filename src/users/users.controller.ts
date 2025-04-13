@@ -11,6 +11,8 @@ import { GetUserByIdService } from './services/get-user-by-id.service';
 import { DeleteUserByEmailService } from './services/delete-user-by-email.service';
 import { UnlockLevelService } from './services/unlock-level.service';
 import { LoginDto } from './dtos/login.dto';
+import { ValidatePasswordService } from './services/validate-password.service';
+import { DeleteEcosystemService } from './services/delete-ecosystem.service';
 
 @Controller('users')
 export class UsersController {
@@ -22,6 +24,8 @@ export class UsersController {
     private readonly getUserByIdService: GetUserByIdService,
     private readonly deleteUserByEmailService: DeleteUserByEmailService,
     private readonly unlockLevelService: UnlockLevelService,
+    private readonly validatePasswordService: ValidatePasswordService,
+    private readonly deleteEcosystemService: DeleteEcosystemService,
   ) {}
 
   //Endpoint to create a new user
@@ -33,7 +37,7 @@ export class UsersController {
   // En el controlador del login
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<{ success: boolean }> {
-    const isValidUser = await this.createUserService.validateUserPassword(
+    const isValidUser = await this.validatePasswordService.validateUserPassword(
       loginDto.email,
       loginDto.password
     );
@@ -76,5 +80,14 @@ export class UsersController {
    @Post(':email/unlock-level')
   async unlockLevel(@Param('email') email: string, @Body('level') level: number) {
     return this.unlockLevelService.unlockLevel(email, level);
+  }
+
+  @Delete(':email/ecosystems/:ecosystemId')
+  async deleteEcosystem(
+    @Param('email') email: string,
+    @Param('ecosystemId') ecosystemId: string
+  ): Promise<{ message: string }> {
+    await this.deleteEcosystemService.deleteEcosystem(email, ecosystemId);
+    return { message: 'Ecosistema eliminado exitosamente' };
   }
 }

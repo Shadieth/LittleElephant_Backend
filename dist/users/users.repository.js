@@ -73,6 +73,11 @@ let UserRepository = class UserRepository {
             ).exec();
         });
     }
+    deleteEcosystem(email, ecosystemId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.userModel.updateOne({ email }, { $pull: { ecosystems: { _id: ecosystemId } } }).exec();
+        });
+    }
 };
 exports.UserRepository = UserRepository;
 exports.UserRepository = UserRepository = __decorate([
