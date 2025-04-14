@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Put, Delete, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './interfaces/user.interface';
 import { CreateUserService } from './services/create-user.service';
@@ -13,6 +13,7 @@ import { UnlockLevelService } from './services/unlock-level.service';
 import { LoginDto } from './dtos/login.dto';
 import { ValidatePasswordService } from './services/validate-password.service';
 import { DeleteEcosystemService } from './services/delete-ecosystem.service';
+import { UnlockLevelDto } from './dtos/unlock-level.dto';
 
 @Controller('users')
 export class UsersController {
@@ -52,9 +53,10 @@ export class UsersController {
   }
 
   //Endpoint to get a user by email
-  @Get('email/:email')
-  async getUserByEmail(@Param() params: GetUserByEmailDto): Promise<User | null> {
-    return this.getUserByEmailService.findByEmail(params.email);
+  @Get('by-email/:email')
+  async getUserByEmail(@Param('email') email: string): Promise<User | null> {
+    console.log('🛠️ Recibí email:', email);
+    return this.getUserByEmailService.findByEmail(email);
   }
 
   //Endpoint to get a user by id
@@ -78,8 +80,19 @@ export class UsersController {
 
    //Endpoint to unlock a level for a user
    @Post(':email/unlock-level')
-  async unlockLevel(@Param('email') email: string, @Body('level') level: number) {
-    return this.unlockLevelService.unlockLevel(email, level);
+  async unlockLevel(
+    @Param('email') email: string,
+    @Body() body: UnlockLevelDto
+  ): Promise<{ message: string; unlockedLevels: number[] }> {
+    const user = await this.unlockLevelService.unlockLevel(email, body.level);
+    if (!user) {
+      throw new NotFoundException(`Usuario con email ${email} no encontrado`);
+    }
+
+    return {
+      message: `Nivel ${body.level} desbloqueado correctamente`,
+      unlockedLevels: user.unlockedLevels
+    };
   }
 
   @Delete(':email/ecosystems/:ecosystemId')

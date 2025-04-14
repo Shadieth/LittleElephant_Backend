@@ -14,6 +14,4 @@ export class CreateEcosystemService {
     }
     return await this.ecosystemRepo.create(dto);
   }
-
- 
 }

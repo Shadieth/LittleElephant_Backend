@@ -36,6 +36,7 @@ const unlock_level_service_1 = require("./services/unlock-level.service");
 const login_dto_1 = require("./dtos/login.dto");
 const validate_password_service_1 = require("./services/validate-password.service");
 const delete_ecosystem_service_1 = require("./services/delete-ecosystem.service");
+const unlock_level_dto_1 = require("./dtos/unlock-level.dto");
 let UsersController = class UsersController {
     constructor(createUserService, getUserByEmailService, getAllUsersService, updateUserByEmailService, getUserByIdService, deleteUserByEmailService, unlockLevelService, validatePasswordService, deleteEcosystemService) {
         this.createUserService = createUserService;
@@ -68,9 +69,10 @@ let UsersController = class UsersController {
         });
     }
     //Endpoint to get a user by email
-    getUserByEmail(params) {
+    getUserByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.getUserByEmailService.findByEmail(params.email);
+            console.log('🛠️ Recibí email:', email);
+            return this.getUserByEmailService.findByEmail(email);
         });
     }
     //Endpoint to get a user by id
@@ -93,9 +95,16 @@ let UsersController = class UsersController {
         });
     }
     //Endpoint to unlock a level for a user
-    unlockLevel(email, level) {
+    unlockLevel(email, body) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.unlockLevelService.unlockLevel(email, level);
+            const user = yield this.unlockLevelService.unlockLevel(email, body.level);
+            if (!user) {
+                throw new common_1.NotFoundException(`Usuario con email ${email} no encontrado`);
+            }
+            return {
+                message: `Nivel ${body.level} desbloqueado correctamente`,
+                unlockedLevels: user.unlockedLevels
+            };
         });
     }
     deleteEcosystem(email, ecosystemId) {
@@ -127,10 +136,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getAllUsers", null);
 __decorate([
-    (0, common_1.Get)('email/:email'),
-    __param(0, (0, common_1.Param)()),
+    (0, common_1.Get)('by-email/:email'),
+    __param(0, (0, common_1.Param)('email')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [get_user_dto_1.GetUserByEmailDto]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getUserByEmail", null);
 __decorate([
@@ -158,9 +167,9 @@ __decorate([
 __decorate([
     (0, common_1.Post)(':email/unlock-level'),
     __param(0, (0, common_1.Param)('email')),
-    __param(1, (0, common_1.Body)('level')),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:paramtypes", [String, unlock_level_dto_1.UnlockLevelDto]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "unlockLevel", null);
 __decorate([

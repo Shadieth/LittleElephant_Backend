@@ -43,8 +43,8 @@ export class UserRepository {
   async unlockLevel(email: string, level: number): Promise<User | null> {
     return this.userModel.findOneAndUpdate(
       { email },
-      { $addToSet: { unlockedLevels: level } }, // Agrega el nivel si no está ya desbloqueado
-      { new: true } // Retorna el usuario actualizado
+      { $addToSet: { unlockedLevels: level } }, // solo lo agrega si no está
+      { new: true }
     ).exec();
   }
 

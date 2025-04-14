@@ -68,9 +68,8 @@ let UserRepository = class UserRepository {
     }
     unlockLevel(email, level) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.userModel.findOneAndUpdate({ email }, { $addToSet: { unlockedLevels: level } }, // Agrega el nivel si no está ya desbloqueado
-            { new: true } // Retorna el usuario actualizado
-            ).exec();
+            return this.userModel.findOneAndUpdate({ email }, { $addToSet: { unlockedLevels: level } }, // solo lo agrega si no está
+            { new: true }).exec();
         });
     }
     deleteEcosystem(email, ecosystemId) {

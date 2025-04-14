@@ -27,11 +27,7 @@ let UnlockLevelService = class UnlockLevelService {
     }
     unlockLevel(email, level) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userRepository.unlockLevel(email, level);
-            if (!user) {
-                throw new common_1.NotFoundException(`User with email ${email} not found`);
-            }
-            return { message: `Level ${level} unlocked successfully` };
+            return yield this.userRepository.unlockLevel(email, level);
         });
     }
 };
