@@ -21,6 +21,7 @@ const delete_user_by_email_service_1 = require("./services/delete-user-by-email.
 const unlock_level_service_1 = require("./services/unlock-level.service");
 const validate_password_service_1 = require("./services/validate-password.service");
 const delete_ecosystem_service_1 = require("./services/delete-ecosystem.service");
+const get_user_profile_service_1 = require("./services/get-user-profile.service");
 let UsersModule = class UsersModule {
 };
 exports.UsersModule = UsersModule;
@@ -41,6 +42,7 @@ exports.UsersModule = UsersModule = __decorate([
             delete_user_by_email_service_1.DeleteUserByEmailService,
             unlock_level_service_1.UnlockLevelService,
             validate_password_service_1.ValidatePasswordService,
+            get_user_profile_service_1.GetUserProfileService
         ],
     })
 ], UsersModule);

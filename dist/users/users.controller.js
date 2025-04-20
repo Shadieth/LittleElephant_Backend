@@ -38,7 +38,8 @@ const validate_password_service_1 = require("./services/validate-password.servic
 const delete_ecosystem_service_1 = require("./services/delete-ecosystem.service");
 const unlock_level_dto_1 = require("./dtos/unlock-level.dto");
 let UsersController = class UsersController {
-    constructor(createUserService, getUserByEmailService, getAllUsersService, updateUserByEmailService, getUserByIdService, deleteUserByEmailService, unlockLevelService, validatePasswordService, deleteEcosystemService) {
+    constructor(createUserService, getUserByEmailService, getAllUsersService, updateUserByEmailService, getUserByIdService, deleteUserByEmailService, unlockLevelService, validatePasswordService, deleteEcosystemService, getUserProfileService // Usamos el mismo servicio para obtener el perfil
+    ) {
         this.createUserService = createUserService;
         this.getUserByEmailService = getUserByEmailService;
         this.getAllUsersService = getAllUsersService;
@@ -48,6 +49,7 @@ let UsersController = class UsersController {
         this.unlockLevelService = unlockLevelService;
         this.validatePasswordService = validatePasswordService;
         this.deleteEcosystemService = deleteEcosystemService;
+        this.getUserProfileService = getUserProfileService;
     }
     //Endpoint to create a new user
     create(createUserDto) {
@@ -75,16 +77,10 @@ let UsersController = class UsersController {
             return this.getUserByEmailService.findByEmail(email);
         });
     }
-    //Endpoint to get a user by id
-    getUserById(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.getUserByIdService.findById(params.id);
-        });
-    }
     //Endpoint to update a user by email
-    updateUserByEmail(params, updateUserDto) {
+    updateUserByEmail(email, updateUserDto) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.updateUserByEmailService.updateUserByEmail(params.email, updateUserDto);
+            return this.updateUserByEmailService.updateUserByEmail(email, updateUserDto);
         });
     }
     // Endpoint to delete a user by email
@@ -111,6 +107,20 @@ let UsersController = class UsersController {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.deleteEcosystemService.deleteEcosystem(email, ecosystemId);
             return { message: 'Ecosistema eliminado exitosamente' };
+        });
+    }
+    // Endpoint para obtener solo lo necesario para la pantalla de perfil (sin contraseña)
+    // Endpoint para obtener perfil sin contraseña
+    getUserByEmailForProfile(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log('📄 Recibí email para perfil:', email);
+            return this.getUserProfileService.findByEmail(email);
+        });
+    }
+    //Endpoint to get a user by id
+    getUserById(params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.getUserByIdService.findById(params.id);
         });
     }
 };
@@ -143,18 +153,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getUserByEmail", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [get_user_dto_1.GetUserByIdDto]),
-    __metadata("design:returntype", Promise)
-], UsersController.prototype, "getUserById", null);
-__decorate([
-    (0, common_1.Put)(':email'),
-    __param(0, (0, common_1.Param)()),
+    (0, common_1.Put)('by-email/:email'),
+    __param(0, (0, common_1.Param)('email')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [get_user_dto_1.GetUserByEmailDto, update_user_dto_1.UpdateUserDto]),
+    __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "updateUserByEmail", null);
 __decorate([
@@ -180,6 +183,20 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "deleteEcosystem", null);
+__decorate([
+    (0, common_1.Get)(':email'),
+    __param(0, (0, common_1.Param)('email')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getUserByEmailForProfile", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [get_user_dto_1.GetUserByIdDto]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getUserById", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [create_user_service_1.CreateUserService,
@@ -190,5 +207,7 @@ exports.UsersController = UsersController = __decorate([
         delete_user_by_email_service_1.DeleteUserByEmailService,
         unlock_level_service_1.UnlockLevelService,
         validate_password_service_1.ValidatePasswordService,
-        delete_ecosystem_service_1.DeleteEcosystemService])
+        delete_ecosystem_service_1.DeleteEcosystemService,
+        get_user_by_email_service_1.GetUserByEmailService // Usamos el mismo servicio para obtener el perfil
+    ])
 ], UsersController);

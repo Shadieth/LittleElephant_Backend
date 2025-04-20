@@ -17,45 +17,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateUserByEmailService = void 0;
+exports.GetUserProfileService = void 0;
 const common_1 = require("@nestjs/common");
-const bcrypt_1 = __importDefault(require("bcrypt"));
 const users_repository_1 = require("../users.repository");
-let UpdateUserByEmailService = class UpdateUserByEmailService {
+let GetUserProfileService = class GetUserProfileService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
-    updateUserByEmail(email, updateUserDto) {
+    findByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userRepository.findByEmail(email);
-            if (!user) {
-                throw new common_1.NotFoundException('Usuario no encontrado');
-            }
-            const updatedData = Object.assign({}, updateUserDto);
-            // ✅ Validar la contraseña actual antes de permitir el cambio
-            if (updateUserDto.password) {
-                if (!updateUserDto.currentPassword) {
-                    throw new common_1.BadRequestException('Debe proporcionar la contraseña actual');
-                }
-                const isPasswordValid = yield bcrypt_1.default.compare(updateUserDto.currentPassword, user.password);
-                if (!isPasswordValid) {
-                    throw new common_1.BadRequestException('La contraseña actual es incorrecta');
-                }
-                // Hasheamos la nueva contraseña
-                const salt = yield bcrypt_1.default.genSalt(10);
-                updatedData.password = yield bcrypt_1.default.hash(updateUserDto.password, salt);
-            }
-            delete updatedData.currentPassword; // No queremos guardar este campo
-            return yield this.userRepository.updateUserByEmail(email, updatedData);
+            return this.userRepository.findByEmailWithoutPassword(email);
         });
     }
 };
-exports.UpdateUserByEmailService = UpdateUserByEmailService;
-exports.UpdateUserByEmailService = UpdateUserByEmailService = __decorate([
+exports.GetUserProfileService = GetUserProfileService;
+exports.GetUserProfileService = GetUserProfileService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [users_repository_1.UserRepository])
-], UpdateUserByEmailService);
+], GetUserProfileService);

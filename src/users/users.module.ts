@@ -12,6 +12,7 @@ import { DeleteUserByEmailService } from './services/delete-user-by-email.servic
 import { UnlockLevelService } from './services/unlock-level.service';
 import { ValidatePasswordService } from './services/validate-password.service';
 import { DeleteEcosystemService } from './services/delete-ecosystem.service';
+import { GetUserProfileService } from './services/get-user-profile.service';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { DeleteEcosystemService } from './services/delete-ecosystem.service';
     DeleteUserByEmailService,
     UnlockLevelService,
     ValidatePasswordService,
+    GetUserProfileService
   ],
 })
 export class UsersModule {}

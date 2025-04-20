@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './interfaces/user.interface';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { HydratedDocument } from 'mongoose';
 
 @Injectable()
 export class UserRepository {
@@ -19,6 +20,16 @@ export class UserRepository {
   async findByEmail(email: string): Promise<User | null> {
     return await this.userModel.findOne({ email }).exec();
   }
+
+   // Buscar un usuario sin incluir la contraseña
+async findByEmailWithoutPassword(email: string): Promise<Partial<User> | null> {
+  const user = await this.userModel.findOne({ email }).exec();
+  if (!user) return null;
+
+  const { password, ...userWithoutPassword } = user.toObject();
+  return userWithoutPassword;
+}
+
 
   //Find a user by id
   async findById(id: string): Promise<User | null> {

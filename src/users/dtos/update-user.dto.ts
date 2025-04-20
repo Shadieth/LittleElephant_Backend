@@ -1,12 +1,28 @@
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsOptional, IsString, IsDateString, IsIn } from 'class-validator'
 
 export class UpdateUserDto {
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  name!: string;
+  firstName?: string;
 
+  @IsOptional()
   @IsString()
-  @MinLength(6)
-  @MaxLength(20)
-  password!: string;
+  lastName?: string;
+
+  @IsOptional()
+  @IsDateString()
+  birthDate?: Date;
+
+  @IsOptional()
+  @IsIn(['male', 'female', 'other'])
+  gender?: string;
+
+  @IsOptional()
+  @IsString()
+  password?: string;
+
+  @IsOptional()
+  @IsString()
+  currentPassword?: string; // ✅ Campo nuevo para validación
 }
+

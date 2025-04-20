@@ -27,6 +27,7 @@ export class UsersController {
     private readonly unlockLevelService: UnlockLevelService,
     private readonly validatePasswordService: ValidatePasswordService,
     private readonly deleteEcosystemService: DeleteEcosystemService,
+    private readonly getUserProfileService: GetUserByEmailService // Usamos el mismo servicio para obtener el perfil
   ) {}
 
   //Endpoint to create a new user
@@ -59,16 +60,13 @@ export class UsersController {
     return this.getUserByEmailService.findByEmail(email);
   }
 
-  //Endpoint to get a user by id
-  @Get(':id')
-  async getUserById(@Param() params: GetUserByIdDto): Promise<User | null> {
-    return this.getUserByIdService.findById(params.id);
-  }
-
   //Endpoint to update a user by email
-  @Put(':email')
-  async updateUserByEmail(@Param() params: GetUserByEmailDto, @Body() updateUserDto: UpdateUserDto): Promise<User | null> {
-    return this.updateUserByEmailService.updateUserByEmail(params.email, updateUserDto);
+  @Put('by-email/:email')
+  async updateUserByEmail(
+    @Param('email') email: string,
+     @Body() updateUserDto: UpdateUserDto
+  ): Promise<User | null> {
+    return this.updateUserByEmailService.updateUserByEmail(email, updateUserDto);
   }
 
    // Endpoint to delete a user by email
@@ -102,5 +100,21 @@ export class UsersController {
   ): Promise<{ message: string }> {
     await this.deleteEcosystemService.deleteEcosystem(email, ecosystemId);
     return { message: 'Ecosistema eliminado exitosamente' };
+  }
+
+  // Endpoint para obtener solo lo necesario para la pantalla de perfil (sin contraseña)
+// Endpoint para obtener perfil sin contraseña
+@Get(':email')
+async getUserByEmailForProfile(@Param('email') email: string): Promise<Partial<User> | null> {
+  console.log('📄 Recibí email para perfil:', email);
+  return this.getUserProfileService.findByEmail(email);
+}
+
+
+
+  //Endpoint to get a user by id
+  @Get(':id')
+  async getUserById(@Param() params: GetUserByIdDto): Promise<User | null> {
+    return this.getUserByIdService.findById(params.id);
   }
 }
