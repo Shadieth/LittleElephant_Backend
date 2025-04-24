@@ -10,12 +10,12 @@ enum Gender {
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
-  @MinLength(3)
+  @MinLength(1)
   firstName!: string;
 
   @IsString()
   @IsNotEmpty()
-  @MinLength(3)
+  @MinLength(1)
   lastName!: string;
 
   @Transform(({ value }) => new Date(value))
