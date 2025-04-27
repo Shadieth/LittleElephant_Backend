@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+
 import { UsersController } from './users.controller';
+
+// Servicios (casos de uso)
 import { CreateUserService } from './services/create-user.service';
-import { UserRepository } from './users.repository';
-import { UserSchema } from './schemas/create-user.schema';
 import { GetUserByEmailService } from './services/get-user-by-email.service';
 import { GetAllUsersService } from './services/get-all-users.service';
 import { UpdateUserByEmailService } from './services/update-user-by-email.service';
@@ -14,12 +15,18 @@ import { ValidatePasswordService } from './services/validate-password.service';
 import { DeleteEcosystemService } from './services/delete-ecosystem.service';
 import { GetUserProfileService } from './services/get-user-profile.service';
 
+// Repositorio y esquema
+import { UserRepository } from './users.repository';
+import { UserSchema } from './schemas/create-user.schema';
+
 @Module({
   imports: [
+    // Registra el esquema de Mongoose para el modelo 'User'
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])
   ],
-  controllers: [UsersController],
+  controllers: [UsersController], // Controlador del módulo de usuarios
   providers: [
+    // Casos de uso (servicios) y repositorio
     CreateUserService,
     GetUserByEmailService,
     GetAllUsersService,
@@ -34,3 +41,4 @@ import { GetUserProfileService } from './services/get-user-profile.service';
   ],
 })
 export class UsersModule {}
+

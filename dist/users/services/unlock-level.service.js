@@ -25,8 +25,15 @@ let UnlockLevelService = class UnlockLevelService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
+    /**
+     * Método para desbloquear un nuevo nivel para un usuario.
+     * @param email - Email del usuario.
+     * @param level - Número del nivel a desbloquear.
+     * @returns El usuario actualizado con el nuevo nivel desbloqueado, o null si no se encuentra.
+     */
     unlockLevel(email, level) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Llama al repositorio para añadir el nivel al array de niveles desbloqueados
             return yield this.userRepository.unlockLevel(email, level);
         });
     }

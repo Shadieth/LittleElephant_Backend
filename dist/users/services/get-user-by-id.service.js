@@ -25,8 +25,14 @@ let GetUserByIdService = class GetUserByIdService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
+    /**
+     * Método para buscar un usuario a partir de su ID.
+     * @param id - ID único del usuario.
+     * @returns El usuario correspondiente si existe, o null si no se encuentra.
+     */
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Utiliza el repositorio para buscar el usuario por ID
             return yield this.userRepository.findById(id);
         });
     }

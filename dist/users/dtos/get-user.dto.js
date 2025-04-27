@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetUserByIdDto = exports.GetUserByEmailDto = void 0;
 const class_validator_1 = require("class-validator");
+// DTO (Data Transfer Object) para obtener un usuario mediante su email
 class GetUserByEmailDto {
 }
 exports.GetUserByEmailDto = GetUserByEmailDto;
@@ -19,6 +20,7 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], GetUserByEmailDto.prototype, "email", void 0);
+// DTO (Data Transfer Object) para obtener un usuario mediante su ID
 class GetUserByIdDto {
 }
 exports.GetUserByIdDto = GetUserByIdDto;

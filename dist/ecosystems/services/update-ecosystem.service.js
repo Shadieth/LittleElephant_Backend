@@ -25,6 +25,12 @@ let UpdateEcosystemService = class UpdateEcosystemService {
     constructor(ecosystemRepo) {
         this.ecosystemRepo = ecosystemRepo;
     }
+    /**
+     * Actualiza un ecosistema existente en la base de datos.
+     * @param id - ID del ecosistema a actualizar.
+     * @param dto - Datos nuevos para la actualización.
+     * @returns El ecosistema actualizado.
+     */
     update(id, dto) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.ecosystemRepo.update(id, dto);

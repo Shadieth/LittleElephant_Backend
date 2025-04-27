@@ -38,7 +38,7 @@ const validate_password_service_1 = require("./services/validate-password.servic
 const delete_ecosystem_service_1 = require("./services/delete-ecosystem.service");
 const unlock_level_dto_1 = require("./dtos/unlock-level.dto");
 let UsersController = class UsersController {
-    constructor(createUserService, getUserByEmailService, getAllUsersService, updateUserByEmailService, getUserByIdService, deleteUserByEmailService, unlockLevelService, validatePasswordService, deleteEcosystemService, getUserProfileService // Usamos el mismo servicio para obtener el perfil
+    constructor(createUserService, getUserByEmailService, getAllUsersService, updateUserByEmailService, getUserByIdService, deleteUserByEmailService, unlockLevelService, validatePasswordService, deleteEcosystemService, getUserProfileService // Reutilización del servicio de búsqueda de usuario
     ) {
         this.createUserService = createUserService;
         this.getUserByEmailService = getUserByEmailService;
@@ -51,46 +51,46 @@ let UsersController = class UsersController {
         this.deleteEcosystemService = deleteEcosystemService;
         this.getUserProfileService = getUserProfileService;
     }
-    //Endpoint to create a new user
+    // Endpoint para crear un nuevo usuario
     create(createUserDto) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.createUserService.create(createUserDto);
         });
     }
-    // En el controlador del login
+    // Endpoint para login de usuario (validación de credenciales)
     login(loginDto) {
         return __awaiter(this, void 0, void 0, function* () {
             const isValidUser = yield this.validatePasswordService.validateUserPassword(loginDto.email, loginDto.password);
-            return { success: isValidUser }; // En lugar de devolver solo el booleano, devolvemos un objeto con la propiedad 'success'
+            return { success: isValidUser };
         });
     }
-    //Endpoint to get all users
+    // Endpoint para obtener todos los usuarios
     getAllUsers() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.getAllUsersService.getAllUsers();
         });
     }
-    //Endpoint to get a user by email
+    // Endpoint para obtener un usuario por email
     getUserByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('🛠️ Recibí email:', email);
             return this.getUserByEmailService.findByEmail(email);
         });
     }
-    //Endpoint to update a user by email
+    // Endpoint para actualizar un usuario por email
     updateUserByEmail(email, updateUserDto) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.updateUserByEmailService.updateUserByEmail(email, updateUserDto);
         });
     }
-    // Endpoint to delete a user by email
+    // Endpoint para eliminar un usuario por email
     deleteUserByEmail(params) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.deleteUserByEmailService.deleteUserByEmail(params.email);
             return { message: 'User deleted successfully' };
         });
     }
-    //Endpoint to unlock a level for a user
+    // Endpoint para desbloquear un nivel para un usuario
     unlockLevel(email, body) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.unlockLevelService.unlockLevel(email, body.level);
@@ -103,21 +103,21 @@ let UsersController = class UsersController {
             };
         });
     }
+    // Endpoint para eliminar un ecosistema asociado a un usuario
     deleteEcosystem(email, ecosystemId) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.deleteEcosystemService.deleteEcosystem(email, ecosystemId);
             return { message: 'Ecosistema eliminado exitosamente' };
         });
     }
-    // Endpoint para obtener solo lo necesario para la pantalla de perfil (sin contraseña)
-    // Endpoint para obtener perfil sin contraseña
+    // Endpoint para obtener datos de perfil de un usuario (sin contraseña)
     getUserByEmailForProfile(email) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('📄 Recibí email para perfil:', email);
             return this.getUserProfileService.findByEmail(email);
         });
     }
-    //Endpoint to get a user by id
+    // Endpoint para obtener un usuario por ID
     getUserById(params) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.getUserByIdService.findById(params.id);
@@ -208,6 +208,6 @@ exports.UsersController = UsersController = __decorate([
         unlock_level_service_1.UnlockLevelService,
         validate_password_service_1.ValidatePasswordService,
         delete_ecosystem_service_1.DeleteEcosystemService,
-        get_user_by_email_service_1.GetUserByEmailService // Usamos el mismo servicio para obtener el perfil
+        get_user_by_email_service_1.GetUserByEmailService // Reutilización del servicio de búsqueda de usuario
     ])
 ], UsersController);

@@ -29,30 +29,52 @@ let EcosystemRepository = class EcosystemRepository {
     constructor(ecosystemModel) {
         this.ecosystemModel = ecosystemModel;
     }
+    /**
+     * Crea un nuevo ecosistema en la base de datos.
+     * @param createEcosystemDto - Datos del ecosistema a crear.
+     * @returns El ecosistema creado.
+     */
     create(createEcosystemDto) {
         return __awaiter(this, void 0, void 0, function* () {
             const newEcosystem = new this.ecosystemModel(createEcosystemDto);
             return yield newEcosystem.save();
         });
     }
-    // (Opcional) Método para obtener todos los ecosistemas
+    /**
+     * Obtiene todos los ecosistemas almacenados.
+     * @returns Un array de ecosistemas.
+     */
     findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.ecosystemModel.find().exec();
         });
     }
-    // Método para eliminar un ecosistema encontrandolo por el ID
+    /**
+     * Elimina un ecosistema por su ID.
+     * @param ecosystemId - ID del ecosistema a eliminar.
+     */
     deleteEcosystem(ecosystemId) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.ecosystemModel.deleteOne({ _id: ecosystemId }).exec();
         });
     }
-    // Método para encontrar un ecosistema por su nombre
+    /**
+     * Busca un ecosistema por su nombre.
+     * @param name - Nombre del ecosistema.
+     * @returns El ecosistema encontrado o null.
+     */
     findByName(name) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.ecosystemModel.findOne({ name }).exec();
         });
     }
+    /**
+     * Actualiza los datos de un ecosistema existente.
+     * @param id - ID del ecosistema a actualizar.
+     * @param updateEcosystemDto - Nuevos datos del ecosistema.
+     * @returns El ecosistema actualizado.
+     * @throws NotFoundException si no se encuentra el ecosistema.
+     */
     update(id, updateEcosystemDto) {
         return __awaiter(this, void 0, void 0, function* () {
             const updatedEcosystem = yield this.ecosystemModel.findByIdAndUpdate(id, { $set: updateEcosystemDto }, { new: true }).exec();

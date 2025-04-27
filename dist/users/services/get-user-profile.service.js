@@ -25,8 +25,15 @@ let GetUserProfileService = class GetUserProfileService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
+    /**
+     * Método para obtener la información de un usuario por email,
+     * excluyendo el campo de contraseña por motivos de seguridad.
+     * @param email - Email del usuario.
+     * @returns Un objeto parcial del usuario sin la contraseña, o null si no existe.
+     */
     findByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Utiliza el repositorio para buscar el usuario omitiendo el campo password
             return this.userRepository.findByEmailWithoutPassword(email);
         });
     }

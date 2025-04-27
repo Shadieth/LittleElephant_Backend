@@ -29,14 +29,20 @@ let ValidatePasswordService = class ValidatePasswordService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
-    // Método para comparar la contraseña
+    /**
+     * Método para validar la contraseña de un usuario.
+     * @param email - Email del usuario.
+     * @param password - Contraseña proporcionada por el usuario.
+     * @returns boolean indicando si la contraseña es correcta o no.
+     */
     validateUserPassword(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Buscar el usuario por email
             const user = yield this.userRepository.findByEmail(email);
             if (!user) {
                 return false;
             }
-            // Comparar la contraseña introducida con la cifrada en la base de datos
+            // Comparar la contraseña introducida con la almacenada (cifrada) en la base de datos
             const isMatch = yield bcrypt_1.default.compare(password, user.password);
             return isMatch;
         });

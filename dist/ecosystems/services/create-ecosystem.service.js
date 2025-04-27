@@ -25,6 +25,12 @@ let CreateEcosystemService = class CreateEcosystemService {
     constructor(ecosystemRepo) {
         this.ecosystemRepo = ecosystemRepo;
     }
+    /**
+     * Crea un nuevo ecosistema si no existe previamente uno con el mismo nombre.
+     * @param dto - Datos del ecosistema a crear.
+     * @returns El ecosistema creado.
+     * @throws ConflictException si ya existe un ecosistema con el mismo nombre.
+     */
     createEcosystem(dto) {
         return __awaiter(this, void 0, void 0, function* () {
             const existingEcosystem = yield this.ecosystemRepo.findByName(dto.name);

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UnlockLevelDto = void 0;
 const class_validator_1 = require("class-validator");
+// DTO (Data Transfer Object) para desbloquear un nivel para un usuario
 class UnlockLevelDto {
 }
 exports.UnlockLevelDto = UnlockLevelDto;

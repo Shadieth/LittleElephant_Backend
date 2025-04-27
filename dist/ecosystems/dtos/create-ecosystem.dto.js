@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateEcosystemDto = exports.QuestionDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
+// DTO para representar una pregunta dentro de un ecosistema
 class QuestionDto {
 }
 exports.QuestionDto = QuestionDto;
@@ -34,6 +35,7 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], QuestionDto.prototype, "correctAnswer", void 0);
+// DTO principal para la creación de un ecosistema
 class CreateEcosystemDto {
 }
 exports.CreateEcosystemDto = CreateEcosystemDto;

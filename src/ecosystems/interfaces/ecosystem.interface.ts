@@ -1,16 +1,19 @@
 import { Document } from 'mongoose';
 
+// Interface que define una pregunta dentro de un ecosistema
 export interface Question {
-  image: string; // Representa la URL de la imagen
-  options: string[];
-  correctAnswer: string;
+  image: string;           // URL de la imagen asociada a la pregunta
+  options: string[];        // Opciones de respuesta disponibles
+  correctAnswer: string;    // Respuesta correcta de la pregunta
 }
 
+// Interface que define la estructura de un ecosistema en la base de datos
 export interface Ecosystem extends Document {
-  id?: string;
-  name: string;
-  image: string;
-  questions: Question[];
-  createdAt: Date;
+  id?: string;              // Identificador único (opcional)
+  name: string;             // Nombre del ecosistema
+  image: string;            // Imagen representativa del ecosistema
+  questions: Question[];    // Conjunto de preguntas asociadas al ecosistema
+  createdAt: Date;          // Fecha de creación del ecosistema
 }
+
 

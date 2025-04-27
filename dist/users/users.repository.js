@@ -40,20 +40,20 @@ let UserRepository = class UserRepository {
     constructor(userModel) {
         this.userModel = userModel;
     }
-    //Create a new user
+    // Método para crear un nuevo usuario
     create(createUserDto) {
         return __awaiter(this, void 0, void 0, function* () {
             const createdUser = new this.userModel(createUserDto);
             return yield createdUser.save();
         });
     }
-    //Find a user by email
+    // Método para encontrar un usuario por email
     findByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.userModel.findOne({ email }).exec();
         });
     }
-    // Buscar un usuario sin incluir la contraseña
+    // Método para encontrar un usuario por email SIN incluir el campo contraseña
     findByEmailWithoutPassword(email) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.userModel.findOne({ email }).exec();
@@ -63,39 +63,44 @@ let UserRepository = class UserRepository {
             return userWithoutPassword;
         });
     }
-    //Find a user by id
+    // Método para encontrar un usuario por ID
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.userModel.findById(id).exec();
         });
     }
-    //Find all users
+    // Método para obtener todos los usuarios
     findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.userModel.find().exec();
         });
     }
-    //Update a user by email
+    // Método para actualizar un usuario existente por su email
     updateUserByEmail(email, updateUserDto) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.userModel.findOneAndUpdate({ email }, updateUserDto, { new: true }).exec();
+            return yield this.userModel.findOneAndUpdate({ email }, updateUserDto, { new: true } // Devuelve el documento actualizado
+            ).exec();
         });
     }
+    // Método para eliminar un usuario por email
     deleteUserByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield this.userModel.deleteOne({ email }).exec();
             return result.deletedCount > 0;
         });
     }
+    // Método para desbloquear un nivel para un usuario (agregándolo al array de niveles desbloqueados)
     unlockLevel(email, level) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.userModel.findOneAndUpdate({ email }, { $addToSet: { unlockedLevels: level } }, // solo lo agrega si no está
+            return this.userModel.findOneAndUpdate({ email }, { $addToSet: { unlockedLevels: level } }, // Solo agrega el nivel si no existe ya
             { new: true }).exec();
         });
     }
+    // Método para eliminar un ecosistema del array de ecosistemas de un usuario
     deleteEcosystem(email, ecosystemId) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.userModel.updateOne({ email }, { $pull: { ecosystems: { _id: ecosystemId } } }).exec();
+            yield this.userModel.updateOne({ email }, { $pull: { ecosystems: { _id: ecosystemId } } } // Elimina el ecosistema con el ID proporcionado
+            ).exec();
         });
     }
 };

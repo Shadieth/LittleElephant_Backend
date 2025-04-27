@@ -25,6 +25,11 @@ let DeleteUserByEmailService = class DeleteUserByEmailService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
+    /**
+     * Método para eliminar un usuario basado en su email.
+     * @param email - Email del usuario a eliminar.
+     * @throws NotFoundException si el usuario no se encuentra.
+     */
     deleteUserByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             const deleted = yield this.userRepository.deleteUserByEmail(email);

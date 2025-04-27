@@ -25,8 +25,13 @@ let GetAllUsersService = class GetAllUsersService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
+    /**
+     * Método para obtener todos los usuarios registrados en la base de datos.
+     * @returns Un array de usuarios.
+     */
     getAllUsers() {
         return __awaiter(this, void 0, void 0, function* () {
+            // Llama al repositorio para obtener la lista completa de usuarios
             return yield this.userRepository.findAll();
         });
     }

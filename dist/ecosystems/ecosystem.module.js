@@ -11,18 +11,21 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const ecosystems_controller_1 = require("./ecosystems.controller");
 const create_ecosystem_service_1 = require("./services/create-ecosystem.service");
-const ecosystems_repository_1 = require("./ecosystems.repository");
-const ecosystem_schema_1 = require("./schemas/ecosystem.schema");
 const get_all_ecosystem_service_1 = require("./services/get-all-ecosystem.service");
 const delete_ecosystem_service_1 = require("./services/delete-ecosystem.service");
 const update_ecosystem_service_1 = require("./services/update-ecosystem.service");
+const ecosystems_repository_1 = require("./ecosystems.repository");
+const ecosystem_schema_1 = require("./schemas/ecosystem.schema");
 let EcosystemModule = class EcosystemModule {
 };
 exports.EcosystemModule = EcosystemModule;
 exports.EcosystemModule = EcosystemModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: 'Ecosystem', schema: ecosystem_schema_1.EcosystemModel.schema }]), // Aquí debes usar EcosystemModel.schema
+            // Importa el modelo Ecosystem en el módulo de Mongoose
+            mongoose_1.MongooseModule.forFeature([
+                { name: 'Ecosystem', schema: ecosystem_schema_1.EcosystemModel.schema }
+            ]),
         ],
         controllers: [ecosystems_controller_1.EcosystemsController],
         providers: [

@@ -12,12 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
+// Definición de los valores permitidos para el campo género
 var Gender;
 (function (Gender) {
     Gender["MALE"] = "male";
     Gender["FEMALE"] = "female";
     Gender["OTHER"] = "other";
 })(Gender || (Gender = {}));
+// DTO (Data Transfer Object) para la creación de un nuevo usuario
 class CreateUserDto {
 }
 exports.CreateUserDto = CreateUserDto;

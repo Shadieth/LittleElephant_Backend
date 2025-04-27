@@ -12,26 +12,48 @@ export class EcosystemRepository {
     private readonly ecosystemModel: Model<Ecosystem>,
   ) {}
 
+  /**
+   * Crea un nuevo ecosistema en la base de datos.
+   * @param createEcosystemDto - Datos del ecosistema a crear.
+   * @returns El ecosistema creado.
+   */
   async create(createEcosystemDto: CreateEcosystemDto): Promise<Ecosystem> {
     const newEcosystem = new this.ecosystemModel(createEcosystemDto);
     return await newEcosystem.save();
   }
 
-  // (Opcional) Método para obtener todos los ecosistemas
+  /**
+   * Obtiene todos los ecosistemas almacenados.
+   * @returns Un array de ecosistemas.
+   */
   async findAll(): Promise<Ecosystem[]> {
     return this.ecosystemModel.find().exec();
   }
 
-// Método para eliminar un ecosistema encontrandolo por el ID
+  /**
+   * Elimina un ecosistema por su ID.
+   * @param ecosystemId - ID del ecosistema a eliminar.
+   */
   async deleteEcosystem(ecosystemId: string): Promise<void> {
-        await this.ecosystemModel.deleteOne({ _id: ecosystemId }).exec();
-    }
+    await this.ecosystemModel.deleteOne({ _id: ecosystemId }).exec();
+  }
 
-// Método para encontrar un ecosistema por su nombre
+  /**
+   * Busca un ecosistema por su nombre.
+   * @param name - Nombre del ecosistema.
+   * @returns El ecosistema encontrado o null.
+   */
   async findByName(name: string): Promise<Ecosystem | null> {
     return this.ecosystemModel.findOne({ name }).exec();
   }
 
+  /**
+   * Actualiza los datos de un ecosistema existente.
+   * @param id - ID del ecosistema a actualizar.
+   * @param updateEcosystemDto - Nuevos datos del ecosistema.
+   * @returns El ecosistema actualizado.
+   * @throws NotFoundException si no se encuentra el ecosistema.
+   */
   async update(id: string, updateEcosystemDto: UpdateEcosystemDto): Promise<Ecosystem> {
     const updatedEcosystem = await this.ecosystemModel.findByIdAndUpdate(
       id,
@@ -46,4 +68,5 @@ export class EcosystemRepository {
     return updatedEcosystem;
   }
 }
+
 

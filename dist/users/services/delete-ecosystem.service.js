@@ -25,8 +25,14 @@ let DeleteEcosystemService = class DeleteEcosystemService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
+    /**
+     * Método para eliminar un ecosistema específico de un usuario.
+     * @param email - Email del usuario.
+     * @param ecosystemId - Identificador único del ecosistema a eliminar.
+     */
     deleteEcosystem(email, ecosystemId) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Utiliza el repositorio para eliminar el ecosistema del usuario
             yield this.userRepository.deleteEcosystem(email, ecosystemId);
         });
     }

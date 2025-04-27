@@ -13,6 +13,7 @@ exports.UpdateEcosystemDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const create_ecosystem_dto_1 = require("./create-ecosystem.dto");
+// DTO para actualizar un ecosistema existente
 class UpdateEcosystemDto {
 }
 exports.UpdateEcosystemDto = UpdateEcosystemDto;

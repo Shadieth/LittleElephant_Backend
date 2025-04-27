@@ -25,8 +25,10 @@ let DeleteEcosystemService = class DeleteEcosystemService {
     constructor(ecosystemRepo) {
         this.ecosystemRepo = ecosystemRepo;
     }
-    // Método para eliminar un ecosistema
-    // Este método recibe el ID del ecosistema a eliminar
+    /**
+     * Elimina un ecosistema de la base de datos.
+     * @param ecosystemId - ID del ecosistema a eliminar.
+     */
     deleteEcosystem(ecosystemId) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.ecosystemRepo.deleteEcosystem(ecosystemId);

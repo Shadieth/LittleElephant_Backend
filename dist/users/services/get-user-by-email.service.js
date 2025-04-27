@@ -25,8 +25,14 @@ let GetUserByEmailService = class GetUserByEmailService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
+    /**
+     * Método para buscar un usuario por su dirección de correo electrónico.
+     * @param email - Email del usuario.
+     * @returns El usuario encontrado o null si no existe.
+     */
     findByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Utiliza el repositorio para buscar el usuario por email
             return yield this.userRepository.findByEmail(email);
         });
     }

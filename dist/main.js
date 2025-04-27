@@ -42,6 +42,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// Importaciones principales de NestJS y módulos propios
 const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const database_module_1 = require("./config/database.module");
@@ -51,26 +52,29 @@ const path_1 = require("path");
 function bootstrap() {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
+        // Crear instancia de la aplicación NestJS
         const app = yield core_1.NestFactory.create(app_module_1.AppModule);
         const port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
-        // Conectar a la base de datos
+        // Conectar manualmente a la base de datos usando el módulo de configuración
         yield database_module_1.DatabaseModule.connect();
-        // Habilitar CORS
+        // Habilitar CORS para permitir peticiones de cualquier origen
         app.enableCors({
             origin: '*',
             methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
             allowedHeaders: 'Content-Type, Accept',
         });
-        // Habilitar validaciones globales
+        // Habilitar validaciones globales en las peticiones
         app.useGlobalPipes(new common_1.ValidationPipe({
-            whitelist: true,
-            forbidNonWhitelisted: true,
-            transform: true,
+            whitelist: true, // Elimina propiedades no permitidas automáticamente
+            forbidNonWhitelisted: true, // Lanza error si llegan propiedades no permitidas
+            transform: true, // Transforma payloads a objetos DTO automáticamente
         }));
-        // Servir carpeta pública de imágenes
+        // Servir archivos estáticos de la carpeta pública (por ejemplo, imágenes)
         app.use('/images', express.static((0, path_1.join)(__dirname, '..', 'public/images')));
+        // Arrancar el servidor y escuchar en el puerto especificado
         yield app.listen(port, '0.0.0.0');
         console.log(`Servidor corriendo en http://localhost:${port}`);
     });
 }
+// Ejecutar la función principal
 bootstrap();

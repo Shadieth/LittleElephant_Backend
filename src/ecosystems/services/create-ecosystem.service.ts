@@ -5,8 +5,16 @@ import { EcosystemRepository } from '../ecosystems.repository';
 
 @Injectable()
 export class CreateEcosystemService {
-  constructor(private readonly ecosystemRepo: EcosystemRepository) {}
+  constructor(
+    private readonly ecosystemRepo: EcosystemRepository
+  ) {}
 
+  /**
+   * Crea un nuevo ecosistema si no existe previamente uno con el mismo nombre.
+   * @param dto - Datos del ecosistema a crear.
+   * @returns El ecosistema creado.
+   * @throws ConflictException si ya existe un ecosistema con el mismo nombre.
+   */
   async createEcosystem(dto: CreateEcosystemDto): Promise<Ecosystem> {
     const existingEcosystem = await this.ecosystemRepo.findByName(dto.name);
     if (existingEcosystem) {
@@ -15,3 +23,4 @@ export class CreateEcosystemService {
     return await this.ecosystemRepo.create(dto);
   }
 }
+

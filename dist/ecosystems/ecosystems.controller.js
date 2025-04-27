@@ -24,11 +24,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EcosystemsController = void 0;
 const common_1 = require("@nestjs/common");
 const create_ecosystem_dto_1 = require("./dtos/create-ecosystem.dto");
-const create_ecosystem_service_1 = require("./services/create-ecosystem.service");
-const delete_ecosystem_service_1 = require("./services/delete-ecosystem.service");
-const get_all_ecosystem_service_1 = require("./services/get-all-ecosystem.service");
-const update_ecosystem_service_1 = require("./services/update-ecosystem.service");
 const update_ecosystem_dto_1 = require("./dtos/update-ecosystem.dto");
+const create_ecosystem_service_1 = require("./services/create-ecosystem.service");
+const get_all_ecosystem_service_1 = require("./services/get-all-ecosystem.service");
+const delete_ecosystem_service_1 = require("./services/delete-ecosystem.service");
+const update_ecosystem_service_1 = require("./services/update-ecosystem.service");
 let EcosystemsController = class EcosystemsController {
     constructor(ecosystemService, getAllEcosystems, deleteEcosystemService, updateEcosystemService) {
         this.ecosystemService = ecosystemService;
@@ -36,21 +36,40 @@ let EcosystemsController = class EcosystemsController {
         this.deleteEcosystemService = deleteEcosystemService;
         this.updateEcosystemService = updateEcosystemService;
     }
+    /**
+     * Endpoint para crear un nuevo ecosistema.
+     * @param createEcosystemDto - Datos para crear el ecosistema.
+     * @returns El ecosistema creado.
+     */
     create(createEcosystemDto) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.ecosystemService.createEcosystem(createEcosystemDto);
         });
     }
+    /**
+     * Endpoint para obtener todos los ecosistemas existentes.
+     * @returns Un array de ecosistemas.
+     */
     findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.getAllEcosystems.getAllEcosystems();
         });
     }
+    /**
+     * Endpoint para eliminar un ecosistema por su ID.
+     * @param id - ID del ecosistema a eliminar.
+     */
     deleteEcosystem(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.deleteEcosystemService.deleteEcosystem(id);
         });
     }
+    /**
+     * Endpoint para actualizar un ecosistema por su ID.
+     * @param id - ID del ecosistema a actualizar.
+     * @param updateEcosystemDto - Nuevos datos para actualizar el ecosistema.
+     * @returns El ecosistema actualizado.
+     */
     update(id, updateEcosystemDto) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.updateEcosystemService.update(id, updateEcosystemDto);

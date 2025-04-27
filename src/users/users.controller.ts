@@ -1,4 +1,6 @@
-import { Controller, Post, Body, Get, Param, Put, Delete, NotFoundException } from '@nestjs/common';
+import { 
+  Controller, Post, Body, Get, Param, Put, Delete, NotFoundException 
+} from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './interfaces/user.interface';
 import { CreateUserService } from './services/create-user.service';
@@ -27,57 +29,56 @@ export class UsersController {
     private readonly unlockLevelService: UnlockLevelService,
     private readonly validatePasswordService: ValidatePasswordService,
     private readonly deleteEcosystemService: DeleteEcosystemService,
-    private readonly getUserProfileService: GetUserByEmailService // Usamos el mismo servicio para obtener el perfil
+    private readonly getUserProfileService: GetUserByEmailService // Reutilización del servicio de búsqueda de usuario
   ) {}
 
-  //Endpoint to create a new user
+  // Endpoint para crear un nuevo usuario
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     return this.createUserService.create(createUserDto);
   }
 
-  // En el controlador del login
+  // Endpoint para login de usuario (validación de credenciales)
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<{ success: boolean }> {
     const isValidUser = await this.validatePasswordService.validateUserPassword(
       loginDto.email,
       loginDto.password
     );
-    
-    return { success: isValidUser }; // En lugar de devolver solo el booleano, devolvemos un objeto con la propiedad 'success'
+    return { success: isValidUser };
   }
 
-  //Endpoint to get all users
+  // Endpoint para obtener todos los usuarios
   @Get()
   async getAllUsers(): Promise<User[]> {
     return this.getAllUsersService.getAllUsers();
   }
 
-  //Endpoint to get a user by email
+  // Endpoint para obtener un usuario por email
   @Get('by-email/:email')
   async getUserByEmail(@Param('email') email: string): Promise<User | null> {
     console.log('🛠️ Recibí email:', email);
     return this.getUserByEmailService.findByEmail(email);
   }
 
-  //Endpoint to update a user by email
+  // Endpoint para actualizar un usuario por email
   @Put('by-email/:email')
   async updateUserByEmail(
     @Param('email') email: string,
-     @Body() updateUserDto: UpdateUserDto
+    @Body() updateUserDto: UpdateUserDto
   ): Promise<User | null> {
     return this.updateUserByEmailService.updateUserByEmail(email, updateUserDto);
   }
 
-   // Endpoint to delete a user by email
-   @Delete(':email')
-   async deleteUserByEmail(@Param() params: GetUserByEmailDto): Promise<{ message: string }> {
-     await this.deleteUserByEmailService.deleteUserByEmail(params.email);
-     return { message: 'User deleted successfully' };
-   }
+  // Endpoint para eliminar un usuario por email
+  @Delete(':email')
+  async deleteUserByEmail(@Param() params: GetUserByEmailDto): Promise<{ message: string }> {
+    await this.deleteUserByEmailService.deleteUserByEmail(params.email);
+    return { message: 'User deleted successfully' };
+  }
 
-   //Endpoint to unlock a level for a user
-   @Post(':email/unlock-level')
+  // Endpoint para desbloquear un nivel para un usuario
+  @Post(':email/unlock-level')
   async unlockLevel(
     @Param('email') email: string,
     @Body() body: UnlockLevelDto
@@ -86,13 +87,13 @@ export class UsersController {
     if (!user) {
       throw new NotFoundException(`Usuario con email ${email} no encontrado`);
     }
-
     return {
       message: `Nivel ${body.level} desbloqueado correctamente`,
       unlockedLevels: user.unlockedLevels
     };
   }
 
+  // Endpoint para eliminar un ecosistema asociado a un usuario
   @Delete(':email/ecosystems/:ecosystemId')
   async deleteEcosystem(
     @Param('email') email: string,
@@ -102,17 +103,14 @@ export class UsersController {
     return { message: 'Ecosistema eliminado exitosamente' };
   }
 
-  // Endpoint para obtener solo lo necesario para la pantalla de perfil (sin contraseña)
-// Endpoint para obtener perfil sin contraseña
-@Get(':email')
-async getUserByEmailForProfile(@Param('email') email: string): Promise<Partial<User> | null> {
-  console.log('📄 Recibí email para perfil:', email);
-  return this.getUserProfileService.findByEmail(email);
-}
+  // Endpoint para obtener datos de perfil de un usuario (sin contraseña)
+  @Get(':email')
+  async getUserByEmailForProfile(@Param('email') email: string): Promise<Partial<User> | null> {
+    console.log('📄 Recibí email para perfil:', email);
+    return this.getUserProfileService.findByEmail(email);
+  }
 
-
-
-  //Endpoint to get a user by id
+  // Endpoint para obtener un usuario por ID
   @Get(':id')
   async getUserById(@Param() params: GetUserByIdDto): Promise<User | null> {
     return this.getUserByIdService.findById(params.id);

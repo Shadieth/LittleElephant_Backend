@@ -25,7 +25,10 @@ let GetAllEcosystemsService = class GetAllEcosystemsService {
     constructor(ecosystemRepo) {
         this.ecosystemRepo = ecosystemRepo;
     }
-    // (Opcional) método para obtener todos
+    /**
+     * Obtiene todos los ecosistemas almacenados en la base de datos.
+     * @returns Una lista de ecosistemas.
+     */
     getAllEcosystems() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.ecosystemRepo.findAll();
