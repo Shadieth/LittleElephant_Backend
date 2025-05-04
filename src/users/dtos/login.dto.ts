@@ -1,12 +1,13 @@
 import { IsString, IsEmail, IsNotEmpty } from 'class-validator';
 
-// DTO (Data Transfer Object) para validar los datos de inicio de sesión (login)
+// DTO para validar los datos de inicio de sesión
 export class LoginDto {
-  @IsEmail()
-  @IsNotEmpty()
-  email!: string; // Email del usuario (debe ser un formato de email válido y no vacío)
+  @IsEmail({}, { message: 'Debe introducir un email válido' })
+  @IsNotEmpty({ message: 'El campo email no puede estar vacío' })
+  email!: string;
 
-  @IsString()
-  @IsNotEmpty()
-  password!: string; // Contraseña del usuario (debe ser una cadena de texto no vacía)
+  @IsString({ message: 'La contraseña debe ser una cadena de texto' })
+  @IsNotEmpty({ message: 'Debe introducir una contraseña' })
+  password!: string;
 }
+

@@ -12,49 +12,48 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
-// Definición de los valores permitidos para el campo género
 var Gender;
 (function (Gender) {
     Gender["MALE"] = "male";
     Gender["FEMALE"] = "female";
     Gender["OTHER"] = "other";
 })(Gender || (Gender = {}));
-// DTO (Data Transfer Object) para la creación de un nuevo usuario
 class CreateUserDto {
 }
 exports.CreateUserDto = CreateUserDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.MinLength)(1),
+    (0, class_validator_1.IsNotEmpty)({ message: 'El nombre es obligatorio' }),
+    (0, class_validator_1.MinLength)(2, { message: 'El nombre debe tener al menos 2 caracteres' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "firstName", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.MinLength)(1),
+    (0, class_validator_1.IsNotEmpty)({ message: 'El apellido es obligatorio' }),
+    (0, class_validator_1.MinLength)(2, { message: 'El apellido debe tener al menos 2 caracteres' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "lastName", void 0);
 __decorate([
     (0, class_transformer_1.Transform)(({ value }) => new Date(value)),
-    (0, class_validator_1.IsDate)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsDate)({ message: 'La fecha de nacimiento no es válida' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'La fecha de nacimiento es obligatoria' }),
     __metadata("design:type", Date)
 ], CreateUserDto.prototype, "birthDate", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)(Gender),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEnum)(Gender, { message: 'El género debe ser male, female u other' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "gender", void 0);
 __decorate([
-    (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEmail)({}, { message: 'Debe introducir un email válido' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'El correo electrónico es obligatorio' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "email", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MinLength)(6),
-    (0, class_validator_1.MaxLength)(20),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.MinLength)(6, { message: 'La contraseña debe tener al menos 6 caracteres' }),
+    (0, class_validator_1.MaxLength)(20, { message: 'La contraseña no debe superar los 20 caracteres' }),
+    (0, class_validator_1.Matches)(/(?=.*[A-Z])(?=.*[a-z])(?=.*\d)/, {
+        message: 'La contraseña debe incluir al menos una mayúscula, una minúscula y un número'
+    }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);

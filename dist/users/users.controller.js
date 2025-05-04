@@ -35,10 +35,9 @@ const delete_user_by_email_service_1 = require("./services/delete-user-by-email.
 const unlock_level_service_1 = require("./services/unlock-level.service");
 const login_dto_1 = require("./dtos/login.dto");
 const validate_password_service_1 = require("./services/validate-password.service");
-const delete_ecosystem_service_1 = require("./services/delete-ecosystem.service");
 const unlock_level_dto_1 = require("./dtos/unlock-level.dto");
 let UsersController = class UsersController {
-    constructor(createUserService, getUserByEmailService, getAllUsersService, updateUserByEmailService, getUserByIdService, deleteUserByEmailService, unlockLevelService, validatePasswordService, deleteEcosystemService, getUserProfileService // Reutilización del servicio de búsqueda de usuario
+    constructor(createUserService, getUserByEmailService, getAllUsersService, updateUserByEmailService, getUserByIdService, deleteUserByEmailService, unlockLevelService, validatePasswordService, getUserProfileService // Reutilización del servicio de búsqueda de usuario
     ) {
         this.createUserService = createUserService;
         this.getUserByEmailService = getUserByEmailService;
@@ -48,7 +47,6 @@ let UsersController = class UsersController {
         this.deleteUserByEmailService = deleteUserByEmailService;
         this.unlockLevelService = unlockLevelService;
         this.validatePasswordService = validatePasswordService;
-        this.deleteEcosystemService = deleteEcosystemService;
         this.getUserProfileService = getUserProfileService;
     }
     // Endpoint para crear un nuevo usuario
@@ -101,13 +99,6 @@ let UsersController = class UsersController {
                 message: `Nivel ${body.level} desbloqueado correctamente`,
                 unlockedLevels: user.unlockedLevels
             };
-        });
-    }
-    // Endpoint para eliminar un ecosistema asociado a un usuario
-    deleteEcosystem(email, ecosystemId) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.deleteEcosystemService.deleteEcosystem(email, ecosystemId);
-            return { message: 'Ecosistema eliminado exitosamente' };
         });
     }
     // Endpoint para obtener datos de perfil de un usuario (sin contraseña)
@@ -176,14 +167,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "unlockLevel", null);
 __decorate([
-    (0, common_1.Delete)(':email/ecosystems/:ecosystemId'),
-    __param(0, (0, common_1.Param)('email')),
-    __param(1, (0, common_1.Param)('ecosystemId')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
-    __metadata("design:returntype", Promise)
-], UsersController.prototype, "deleteEcosystem", null);
-__decorate([
     (0, common_1.Get)(':email'),
     __param(0, (0, common_1.Param)('email')),
     __metadata("design:type", Function),
@@ -207,7 +190,6 @@ exports.UsersController = UsersController = __decorate([
         delete_user_by_email_service_1.DeleteUserByEmailService,
         unlock_level_service_1.UnlockLevelService,
         validate_password_service_1.ValidatePasswordService,
-        delete_ecosystem_service_1.DeleteEcosystemService,
         get_user_by_email_service_1.GetUserByEmailService // Reutilización del servicio de búsqueda de usuario
     ])
 ], UsersController);

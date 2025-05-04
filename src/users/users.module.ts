@@ -12,7 +12,6 @@ import { GetUserByIdService } from './services/get-user-by-id.service';
 import { DeleteUserByEmailService } from './services/delete-user-by-email.service';
 import { UnlockLevelService } from './services/unlock-level.service';
 import { ValidatePasswordService } from './services/validate-password.service';
-import { DeleteEcosystemService } from './services/delete-ecosystem.service';
 import { GetUserProfileService } from './services/get-user-profile.service';
 
 // Repositorio y esquema
@@ -32,7 +31,6 @@ import { UserSchema } from './schemas/create-user.schema';
     GetAllUsersService,
     GetUserByIdService,
     UpdateUserByEmailService,
-    DeleteEcosystemService,
     UserRepository,
     DeleteUserByEmailService,
     UnlockLevelService,

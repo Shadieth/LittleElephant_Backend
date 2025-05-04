@@ -14,7 +14,6 @@ import { DeleteUserByEmailService } from './services/delete-user-by-email.servic
 import { UnlockLevelService } from './services/unlock-level.service';
 import { LoginDto } from './dtos/login.dto';
 import { ValidatePasswordService } from './services/validate-password.service';
-import { DeleteEcosystemService } from './services/delete-ecosystem.service';
 import { UnlockLevelDto } from './dtos/unlock-level.dto';
 
 @Controller('users')
@@ -28,7 +27,6 @@ export class UsersController {
     private readonly deleteUserByEmailService: DeleteUserByEmailService,
     private readonly unlockLevelService: UnlockLevelService,
     private readonly validatePasswordService: ValidatePasswordService,
-    private readonly deleteEcosystemService: DeleteEcosystemService,
     private readonly getUserProfileService: GetUserByEmailService // Reutilización del servicio de búsqueda de usuario
   ) {}
 
@@ -91,16 +89,6 @@ export class UsersController {
       message: `Nivel ${body.level} desbloqueado correctamente`,
       unlockedLevels: user.unlockedLevels
     };
-  }
-
-  // Endpoint para eliminar un ecosistema asociado a un usuario
-  @Delete(':email/ecosystems/:ecosystemId')
-  async deleteEcosystem(
-    @Param('email') email: string,
-    @Param('ecosystemId') ecosystemId: string
-  ): Promise<{ message: string }> {
-    await this.deleteEcosystemService.deleteEcosystem(email, ecosystemId);
-    return { message: 'Ecosistema eliminado exitosamente' };
   }
 
   // Endpoint para obtener datos de perfil de un usuario (sin contraseña)

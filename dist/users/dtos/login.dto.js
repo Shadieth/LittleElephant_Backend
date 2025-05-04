@@ -11,17 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginDto = void 0;
 const class_validator_1 = require("class-validator");
-// DTO (Data Transfer Object) para validar los datos de inicio de sesión (login)
+// DTO para validar los datos de inicio de sesión
 class LoginDto {
 }
 exports.LoginDto = LoginDto;
 __decorate([
-    (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEmail)({}, { message: 'Debe introducir un email válido' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'El campo email no puede estar vacío' }),
     __metadata("design:type", String)
 ], LoginDto.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)({ message: 'La contraseña debe ser una cadena de texto' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'Debe introducir una contraseña' }),
     __metadata("design:type", String)
 ], LoginDto.prototype, "password", void 0);

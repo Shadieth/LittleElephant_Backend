@@ -30,21 +30,28 @@ let ValidatePasswordService = class ValidatePasswordService {
         this.userRepository = userRepository;
     }
     /**
-     * Método para validar la contraseña de un usuario.
-     * @param email - Email del usuario.
-     * @param password - Contraseña proporcionada por el usuario.
-     * @returns boolean indicando si la contraseña es correcta o no.
+     * Valida la contraseña de un usuario.
+     * @param email Email del usuario.
+     * @param password Contraseña introducida.
+     * @returns boolean si es válida, o lanza excepción si no.
      */
     validateUserPassword(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Validación defensiva de campos vacíos (por seguridad y UX)
+            if (!email || !password) {
+                throw new common_1.BadRequestException('Email y contraseña son obligatorios');
+            }
             // Buscar el usuario por email
             const user = yield this.userRepository.findByEmail(email);
             if (!user) {
-                return false;
+                throw new common_1.NotFoundException('Usuario no encontrado');
             }
-            // Comparar la contraseña introducida con la almacenada (cifrada) en la base de datos
+            // Validar contraseña
             const isMatch = yield bcrypt_1.default.compare(password, user.password);
-            return isMatch;
+            if (!isMatch) {
+                throw new common_1.UnauthorizedException('Contraseña incorrecta');
+            }
+            return true;
         });
     }
 };

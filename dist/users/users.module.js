@@ -19,7 +19,6 @@ const get_user_by_id_service_1 = require("./services/get-user-by-id.service");
 const delete_user_by_email_service_1 = require("./services/delete-user-by-email.service");
 const unlock_level_service_1 = require("./services/unlock-level.service");
 const validate_password_service_1 = require("./services/validate-password.service");
-const delete_ecosystem_service_1 = require("./services/delete-ecosystem.service");
 const get_user_profile_service_1 = require("./services/get-user-profile.service");
 // Repositorio y esquema
 const users_repository_1 = require("./users.repository");
@@ -41,7 +40,6 @@ exports.UsersModule = UsersModule = __decorate([
             get_all_users_service_1.GetAllUsersService,
             get_user_by_id_service_1.GetUserByIdService,
             update_user_by_email_service_1.UpdateUserByEmailService,
-            delete_ecosystem_service_1.DeleteEcosystemService,
             users_repository_1.UserRepository,
             delete_user_by_email_service_1.DeleteUserByEmailService,
             unlock_level_service_1.UnlockLevelService,

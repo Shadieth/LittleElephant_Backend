@@ -30,22 +30,24 @@ let CreateUserService = class CreateUserService {
         this.userRepository = userRepository;
     }
     /**
-     * Método para crear un nuevo usuario en la base de datos.
-     * @param createUserDto - Datos necesarios para crear el usuario.
-     * @returns El usuario creado.
+     * Crea un nuevo usuario después de validar que no exista y cifrar su contraseña.
+     * @param createUserDto Datos del nuevo usuario.
+     * @returns Usuario creado.
      * @throws ConflictException si el usuario ya existe.
+     * @throws BadRequestException si los datos están incompletos (como fallback defensivo).
      */
     create(createUserDto) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Verificar si ya existe un usuario con el mismo email
+            // Validación defensiva por si algo se escapa del DTO
+            if (!createUserDto.email || !createUserDto.password) {
+                throw new common_1.BadRequestException('Email y contraseña son obligatorios');
+            }
             const user = yield this.userRepository.findByEmail(createUserDto.email);
             if (user) {
-                throw new common_1.ConflictException('User already exists');
+                throw new common_1.ConflictException('El correo electrónico ya está registrado');
             }
-            // Cifrar la contraseña antes de crear el usuario
             const salt = yield bcrypt_1.default.genSalt(10);
             const hashedPassword = yield bcrypt_1.default.hash(createUserDto.password, salt);
-            // Crear y guardar el nuevo usuario
             return yield this.userRepository.create(Object.assign(Object.assign({}, createUserDto), { password: hashedPassword }));
         });
     }
