@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "a155a95a-7e6d-4a8d-ae38-9d8087e7658e",
+		"name": "LittleElephant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41659689"
+	},
+	"item": [
+		{
+			"name": "ecosystems",
+			"item": [
+				{
+					"name": "by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/ecosystems/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"ecosystems",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "67f15c47ea2c18f8c287b035"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/ecosystems",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"ecosystems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"image\": \"http://10.0.2.2:3000/images/granja.png\",\n  \"questions\": [\n    {\n      \"image\": \"http://10.0.2.2:3000/images/vaca.png\",\n      \"options\": [\"Cow\", \"Horse\", \"Pig\"],\n      \"correctAnswer\": \"Cow\"\n    },\n    {\n      \"image\": \"http://10.0.2.2:3000/images/tractor.png\",\n      \"options\": [\"Truck\", \"Tractor\", \"Bike\"],\n      \"correctAnswer\": \"Tractor\"\n    },\n    {\n      \"image\": \"http://10.0.2.2:3000/images/granero.png\",\n      \"options\": [\"Barn\", \"Garage\", \"House\"],\n      \"correctAnswer\": \"Barn\"\n    }\n  ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/ecosystems/67f15c64ea2c18f8c287b03c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"ecosystems",
+								"67f15c64ea2c18f8c287b03c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ecosystem",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Swamp Test\",\n    \"image\": \"http://10.0.2.2:3000/images/pantano.png\",\n    \"questions\": [\n        {\n            \"image\": \"http://10.0.2.2:3000/images/cocodrilo.png\",\n            \"options\": [\n                \"Crocodile\",\n                \"Alligator\",\n                \"Lizard\"\n            ],\n            \"correctAnswer\": \"Crocodile\"\n        },\n        {\n            \"image\": \"http://10.0.2.2:3000/images/rana.png\",\n            \"options\": [\n                \"Toad\",\n                \"Frog\",\n                \"Lizard\"\n            ],\n            \"correctAnswer\": \"Frog\"\n        },\n        {\n            \"image\": \"http://10.0.2.2:3000/images/mosquito.png\",\n            \"options\": [\n                \"Bee\",\n                \"Mosquito\",\n                \"Fly\"\n            ],\n            \"correctAnswer\": \"Mosquito\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/ecosystems",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"ecosystems"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Juan\",\n  \"lastName\": \"Pérez\",\n  \"birthDate\": \"1995-08-15\",\n  \"gender\": \"male\",\n  \"email\": \"usuario@example.com\",\n  \"password\": \"123456\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/usuario@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"usuario@example.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "level-unlock",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"level\": 2\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/shadieth@yahoo.com/unlock-level",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"shadieth@yahoo.com",
+								"unlock-level"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all users",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ashley@example.com\",\n    \"password\": \"Ashley123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "by email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/by-email/shadieth@yahoo.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"by-email",
+								"shadieth@yahoo.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
