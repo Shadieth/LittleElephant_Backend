@@ -75,6 +75,16 @@ let UsersController = class UsersController {
             return this.getUserByEmailService.findByEmail(email);
         });
     }
+    /**
+    * Endpoint para verificar si un usuario existe por email.
+    */
+    checkUserExists(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log('🛠️ Verificando existencia de usuario con email:', email);
+            const user = yield this.getUserByEmailService.findByEmail(email);
+            return { exists: !!user };
+        });
+    }
     // Endpoint para actualizar un usuario por email
     updateUserByEmail(email, updateUserDto) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -143,6 +153,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getUserByEmail", null);
+__decorate([
+    (0, common_1.Get)('exists/:email'),
+    __param(0, (0, common_1.Param)('email')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "checkUserExists", null);
 __decorate([
     (0, common_1.Put)('by-email/:email'),
     __param(0, (0, common_1.Param)('email')),

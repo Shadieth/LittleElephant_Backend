@@ -59,6 +59,16 @@ export class UsersController {
     return this.getUserByEmailService.findByEmail(email);
   }
 
+  /**
+  * Endpoint para verificar si un usuario existe por email.
+  */
+  @Get('exists/:email')
+  async checkUserExists(@Param('email') email: string): Promise<{ exists: boolean }> {
+    console.log('🛠️ Verificando existencia de usuario con email:', email);
+    const user = await this.getUserByEmailService.findByEmail(email);
+    return { exists: !!user };
+  }
+
   // Endpoint para actualizar un usuario por email
   @Put('by-email/:email')
   async updateUserByEmail(
