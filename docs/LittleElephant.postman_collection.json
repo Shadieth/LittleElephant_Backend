@@ -259,6 +259,27 @@
 						"header": []
 					},
 					"response": []
+				},
+				{
+					"name": "user exist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/exists/shadieth@yahoo.comm",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"exists",
+								"shadieth@yahoo.comm"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
