@@ -96,13 +96,6 @@ let UserRepository = class UserRepository {
             { new: true }).exec();
         });
     }
-    // Método para eliminar un ecosistema del array de ecosistemas de un usuario
-    deleteEcosystem(email, ecosystemId) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.userModel.updateOne({ email }, { $pull: { ecosystems: { _id: ecosystemId } } } // Elimina el ecosistema con el ID proporcionado
-            ).exec();
-        });
-    }
 };
 exports.UserRepository = UserRepository;
 exports.UserRepository = UserRepository = __decorate([

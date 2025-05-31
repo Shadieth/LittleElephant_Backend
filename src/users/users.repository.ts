@@ -65,13 +65,5 @@ export class UserRepository {
       { new: true }
     ).exec();
   }
-
-  // Método para eliminar un ecosistema del array de ecosistemas de un usuario
-  async deleteEcosystem(email: string, ecosystemId: string): Promise<void> {
-    await this.userModel.updateOne(
-      { email },
-      { $pull: { ecosystems: { _id: ecosystemId } } } // Elimina el ecosistema con el ID proporcionado
-    ).exec();
-  }
 }
 
