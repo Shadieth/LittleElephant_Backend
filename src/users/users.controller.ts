@@ -55,7 +55,6 @@ export class UsersController {
   // Endpoint para obtener un usuario por email
   @Get('by-email/:email')
   async getUserByEmail(@Param('email') email: string): Promise<User | null> {
-    console.log('🛠️ Recibí email:', email);
     return this.getUserByEmailService.findByEmail(email);
   }
 
@@ -64,7 +63,6 @@ export class UsersController {
   */
   @Get('exists/:email')
   async checkUserExists(@Param('email') email: string): Promise<{ exists: boolean }> {
-    console.log('🛠️ Verificando existencia de usuario con email:', email);
     const user = await this.getUserByEmailService.findByEmail(email);
     return { exists: !!user };
   }
@@ -104,7 +102,6 @@ export class UsersController {
   // Endpoint para obtener datos de perfil de un usuario (sin contraseña)
   @Get(':email')
   async getUserByEmailForProfile(@Param('email') email: string): Promise<Partial<User> | null> {
-    console.log('📄 Recibí email para perfil:', email);
     return this.getUserProfileService.findByEmail(email);
   }
 
